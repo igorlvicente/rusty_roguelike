@@ -11,7 +11,7 @@ impl Player {
         }
     }
 
-    pub fn render(&self, &mut context: BTerm) {
+    pub fn render(&self, context: &mut BTerm) {
         context.set(self.position.x, self.position.y, WHITE, BLACK, to_cp437('@'));
     }
 
@@ -22,7 +22,7 @@ impl Player {
                 VirtualKeyCode::Right => Point::new(1, 0),
                 VirtualKeyCode::Up => Point::new(0, -1),
                 VirtualKeyCode::Down => Point::new(0, 1),
-                _ => Point::zero,
+                _ => Point::zero(),
             };
             let new_position = self.position + delta;
             if map.can_enter_tile(new_position) {
