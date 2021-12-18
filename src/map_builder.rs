@@ -9,6 +9,20 @@ pub struct MapBuilder {
 }
 
 impl MapBuilder {
+    pub fn new(random_number_generator: &mut RandomNumberGenerator) -> Self {
+        let mut map_builder = Self {
+            map: Map::new(),
+            rooms: Vec::new(),
+            player_start: Point::zero(),
+        };
+
+        map_builder.fill(TileType::Wall);
+        map_builder.build_random_rooms(random_number_generator);
+        map_builder.build_corridors(random_number_generator);
+        map_builder.player_start = map_builder.rooms[0].center();
+        map_builder
+    }
+
     fn fill(&mut self, tile: TileType) {
         self.map.tiles.iter_mut().for_each(|map_tile| *map_tile = tile)
     }
