@@ -24,9 +24,11 @@ struct State {
 
 impl State {
     fn new() -> Self {
+        let mut random_number_generator = RandomNumberGenerator::new();
+        let map_builder = MapBuilder::new(&mut random_number_generator);
         Self {
-            map: Map::new(),
-            player: Player::new(Point::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)),
+            map: map_builder.map,
+            player: Player::new(map_builder.player_start),
         }
     }
 }
