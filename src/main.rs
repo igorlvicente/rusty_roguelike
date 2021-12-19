@@ -29,19 +29,25 @@ mod prelude {
 use prelude::*;
 
 struct State {
-    map: Map,
-    player: Player,
-    camera: Camera,
+    ecs: World,
+    resources: Resources,
+    systems: Schedule,
 }
 
 impl State {
     fn new() -> Self {
+        let mut ecs = World::default();
+        let mut resources = Resources::default();
         let mut random_number_generator = RandomNumberGenerator::new();
         let map_builder = MapBuilder::new(&mut random_number_generator);
+        spawn_player(&mut ecs, map_builder.player_start);
+        let camera = Camera::new(map_builder.player_start);
+        resources.insert(map_builder.map);
+        resources.insert(camera);
         Self {
-            map: map_builder.map,
-            player: Player::new(map_builder.player_start),
-            camera: Camera::new(map_builder.player_start),
+            ecs,
+            resources,
+            systems: build_scheduler(),
         }
     }
 }
