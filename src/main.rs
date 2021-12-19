@@ -6,6 +6,7 @@ mod map_builder;
 mod camera;
 mod components;
 mod spawner;
+mod systems;
 
 mod prelude {
     pub use bracket_lib::prelude::*;
@@ -24,6 +25,7 @@ mod prelude {
     pub use crate::camera::*;
     pub use crate::components::*;
     pub use crate::spawner::*;
+    pub use crate::systems::*;
 }
 
 use prelude::*;
@@ -44,6 +46,7 @@ impl State {
         let camera = Camera::new(map_builder.player_start);
         resources.insert(map_builder.map);
         resources.insert(camera);
+
         Self {
             ecs,
             resources,
@@ -58,7 +61,8 @@ impl GameState for State {
         context.cls();
         context.set_active_console(1);
         context.cls();
-        // TODO: Execute Systems
+        self.resources.insert(context.key);
+        self.systems.execute(&mut self.ecs, &mut self.resources);
         // TODO: Render Draw Buffer
     }
 }
