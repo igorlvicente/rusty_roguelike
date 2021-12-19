@@ -23,13 +23,18 @@ impl Map {
         }
     }
 
-    pub fn render(&self, context: &mut BTerm) {
-        for y in 0..SCREEN_HEIGHT {
-            for x in 0..SCREEN_WIDTH {
-                let index = map_index(x, y);
-                match self.tiles[index] {
-                    TileType::Floor => { context.set(x, y, YELLOW, BLACK, to_cp437('.'))},
-                    TileType::Wall => { context.set(x, y, YELLOW, BLACK, to_cp437('#'))},
+    pub fn render(&self, context: &mut BTerm, camera: &Camera) {
+        context.set_active_console(0);
+
+        for y in camera.top_y..camera.bottom_y {
+            for x in camera.left_x..camera.right_x {
+                if self.in_bounds(Point::new(x, y)) {
+                    let index = map_index(x, y);
+
+                    match self.tiles[index] {
+                        TileType::Floor => { context.set(x - camera.left_x, y - camera.top_y, WHITE, BLACK, to_cp437('.'))},
+                        TileType::Wall => { context.set(x - camera.left_x, y - camera.top_y, WHITE, BLACK, to_cp437('#'))},
+                    }
                 }
             }
         }
