@@ -4,6 +4,7 @@ mod map;
 mod player;
 mod map_builder;
 mod camera;
+mod components;
 
 mod prelude {
     pub use bracket_lib::prelude::*;
@@ -20,6 +21,7 @@ mod prelude {
     pub use crate::player::*;
     pub use crate::map_builder::*;
     pub use crate::camera::*;
+    pub use crate::components::*;
 }
 
 use prelude::*;
