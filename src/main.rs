@@ -48,9 +48,8 @@ impl GameState for State {
         context.cls();
         context.set_active_console(1);
         context.cls();
-        self.player.update(context, &self.map, &mut self.camera);
-        self.map.render(context, &self.camera);
-        self.player.render(context, &self.camera);
+        // TODO: Execute Systems
+        // TODO: Render Draw Buffer
     }
 }
 
