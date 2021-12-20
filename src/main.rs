@@ -63,7 +63,7 @@ impl GameState for State {
         context.cls();
         self.resources.insert(context.key);
         self.systems.execute(&mut self.ecs, &mut self.resources);
-        // TODO: Render Draw Buffer
+        render_draw_buffer(context).expect("Render error");
     }
 }
 
