@@ -1,7 +1,6 @@
 use bracket_lib::prelude::*;
 
 mod map;
-mod player;
 mod map_builder;
 mod camera;
 mod components;
@@ -20,7 +19,6 @@ mod prelude {
     pub const DISPLAY_HEIGHT: i32 = SCREEN_HEIGHT / 2;
 
     pub use crate::map::*;
-    pub use crate::player::*;
     pub use crate::map_builder::*;
     pub use crate::camera::*;
     pub use crate::components::*;
