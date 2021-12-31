@@ -6,7 +6,7 @@ use crate::prelude::*;
 pub fn entity_render(entity_component_system: &SubWorld, #[resource] camera: &Camera) {
     let mut draw_batch = DrawBatch::new();
     draw_batch.target(1);
-    let offset = Point::new(camera.left_x, camera.right_x);
+    let offset = Point::new(camera.left_x, camera.top_y);
 
     <(&Point, &Render)>::query()
         .iter(entity_component_system)
