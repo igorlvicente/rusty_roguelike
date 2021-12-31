@@ -29,24 +29,24 @@ mod prelude {
 use prelude::*;
 
 struct State {
-    ecs: World,
+    entity_component_system: World,
     resources: Resources,
     systems: Schedule,
 }
 
 impl State {
     fn new() -> Self {
-        let mut ecs = World::default();
+        let mut entity_component_system = World::default();
         let mut resources = Resources::default();
         let mut random_number_generator = RandomNumberGenerator::new();
         let map_builder = MapBuilder::new(&mut random_number_generator);
-        spawn_player(&mut ecs, map_builder.player_start);
+        spawn_player(&mut entity_component_system, map_builder.player_start);
         let camera = Camera::new(map_builder.player_start);
         resources.insert(map_builder.map);
         resources.insert(camera);
 
         Self {
-            ecs,
+            entity_component_system,
             resources,
             systems: build_scheduler(),
         }
@@ -60,7 +60,7 @@ impl GameState for State {
         context.set_active_console(1);
         context.cls();
         self.resources.insert(context.key);
-        self.systems.execute(&mut self.ecs, &mut self.resources);
+        self.systems.execute(&mut self.entity_component_system, &mut self.resources);
         render_draw_buffer(context).expect("Render error");
     }
 }
